@@ -2,7 +2,7 @@
 
 Convert chinese texts into an anki formated vocabulary list.
 
-
+[https://tailuge.github.io/chankify/build/](https://tailuge.github.io/chankify/build/)
 
 
 # Development
