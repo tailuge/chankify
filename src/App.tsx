@@ -9,13 +9,12 @@ function App() {
 
   const dictionary = new HanDict(dict);
 
-  console.log(dict);
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          {`dict: ${JSON.stringify(dictionary.longestPrefixMatch("12"))}`}
+          {`dict: ${JSON.stringify(dictionary.longestPrefixMatch("䰾魚"))}`}
         </p>
         <a
           className="App-link"
