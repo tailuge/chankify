@@ -3,11 +3,12 @@ import logo from './logo.svg';
 import './App.css';
 import dict from './dict.json';
 import { HanDict } from './HanDict';
+import { Entry } from './Entry';
 
 
 function App() {
 
-  const dictionary = new HanDict(dict);
+  const dictionary = new HanDict(dict as Entry[]);
 
   return (
     <div className="App">

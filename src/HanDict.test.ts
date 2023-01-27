@@ -5,9 +5,9 @@ import { Entry } from './Entry'
 import { HanDict } from './HanDict'
 
 const testDict = [
-    { hanzi: "a", pinyin: "ah", meaning: "any" },
-    { hanzi: "b", pinyin: "be", meaning: "anyb" },
-    { hanzi: "bb", pinyin: "bebe", meaning: "anybb" }
+    { hanzi: "a", pinyin: "", meaning: "" },
+    { hanzi: "b", pinyin: "", meaning: "" },
+    { hanzi: "bb", pinyin: "", meaning: "" }
 ];
 
 const dict = new HanDict(testDict)
@@ -20,3 +20,8 @@ test('finds word', () => {
 test('does not find word', () => {
     expect(dict.longestPrefixMatch("x").hanzi).toEqual("")
 });
+
+test('given bbb finds bb and not just b', () => {
+    expect(dict.longestPrefixMatch("bbb").hanzi).toEqual("bb")
+});
+
