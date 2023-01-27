@@ -33,3 +33,10 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
+
+# Dictionary import
+
+The dictionary used is [CC-CEDICT](https://cc-cedict.org/editor/editor.php?handler=Download) converted to JSON dropping the simpified chinese with 
+
+`cat Downloads/cedict_1_0_ts_utf-8_mdbg.txt | cut -d' ' -f1,3- | grep -v 'variant of' | grep -v xx5 | grep -v '(archaic)' | grep -v '^#' | sed 's/"/\\"/g' | sed 's/ \[/", "pinyin":"/' | sed 's/\] /", "meaning":"/' | sed 's/^/{ "hanzi":"/' | dos2unix | sed 's/\/$/"},/' | sed 's/:"\//:"/' > dict.json`
+
