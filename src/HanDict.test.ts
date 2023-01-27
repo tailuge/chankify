@@ -1,7 +1,3 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
-import { Entry } from './Entry'
 import { HanDict } from './HanDict'
 
 const testDict = [
