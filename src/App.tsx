@@ -2,6 +2,7 @@ import './App.css';
 import dict from './dict.json';
 import { Translate } from './Translate';
 import { Entry } from './Entry';
+import { VocabularyForm } from './VocabularyForm';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         >
           Learn React
         </a>
+        <VocabularyForm />
       </header>
     </div>
   );
