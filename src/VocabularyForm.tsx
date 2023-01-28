@@ -9,7 +9,7 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
 
 
   translate = new Translate(dict as Entry[])
-  state: VocabularyFormState = { inputText: '', outputText: '' }
+  state: VocabularyFormState = { inputText: '', outputText: 'e.g. Paste the following text: 近來「AI製圖」在網上蔚為一陣風潮，透過輸入相關關鍵字，AI就能經過大數據的計算，生成使用者所要的圖片。' }
 
   handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     this.setState({ inputText: event.target.value, outputText: '' });

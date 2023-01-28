@@ -19,3 +19,7 @@ test('no matches', () => {
 test('find both words', () => {
     expect(translate.getVocab("abb").length).toEqual(2)
 });
+
+test('no duplicates', () => {
+    expect(translate.getVocab("aa").length).toEqual(1)
+});

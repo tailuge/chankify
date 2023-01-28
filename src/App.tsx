@@ -13,9 +13,9 @@ function App() {
           rel="noopener noreferrer"
         >
           Chankify
-        </a>
-        <VocabularyForm />
+        </a> - generate tab seperated vocab list from chinese texts
       </header>
+      <VocabularyForm />
     </div>
   );
 }

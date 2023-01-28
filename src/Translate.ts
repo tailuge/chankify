@@ -11,7 +11,7 @@ export class Translate {
 
     getVocab(input: string): Entry[] {
 
-        var words: Entry[] = []
+        var words = new Set<Entry>()
         while(input.length > 0) {
             var word = this.dictionary.longestPrefixMatch(input)
             if (word === this.dictionary.empty) {
@@ -19,9 +19,9 @@ export class Translate {
                 input = input.substring(1)
             } else {
                 input = input.substring(word.hanzi.length)
-                words.push(word)
+                words.add(word)
             }
         }
-        return words
+        return Array.from(words.values())
     }
 }
