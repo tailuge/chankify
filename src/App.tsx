@@ -1,21 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import dict from './dict.json';
-import { HanDict } from './HanDict';
+import { Translate } from './Translate';
 import { Entry } from './Entry';
 
 
 function App() {
 
-  const dictionary = new HanDict(dict as Entry[]);
+  const translate = new Translate(dict as Entry[]);
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
-          {`dict: ${JSON.stringify(dictionary.longestPrefixMatch("䰾魚"))}`}
+          {`dict: ${JSON.stringify(translate.getVocab("近來「AI製圖」在網上蔚為一陣風潮"))}`}
         </p>
         <a
           className="App-link"

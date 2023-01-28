@@ -2,14 +2,13 @@ import { Entry } from "./Entry"
 
 export class HanDict {
 
-    dictionary: Map<string, Entry> = new Map();
+    readonly dictionary: Map<string, Entry> = new Map();
+    readonly empty: Entry = { hanzi: "", pinyin: "", meaning: "" };
+    readonly maxWordLength = 8;
 
     constructor(entries: Entry[]) {
         entries.forEach(entry => { this.dictionary.set(entry.hanzi, entry) });
     }
-
-    readonly empty: Entry = { hanzi: "", pinyin: "", meaning: "" };
-    readonly maxWordLength = 8;
 
     exactMatch(input: string): Entry {
         var result = this.dictionary.get(input)
@@ -26,5 +25,4 @@ export class HanDict {
         }
         return longestMatch
     }
-
 }

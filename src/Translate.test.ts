@@ -1,0 +1,21 @@
+import { Translate } from './Translate'
+
+const testDict = [
+    { hanzi: "a", pinyin: "", meaning: "" },
+    { hanzi: "b", pinyin: "", meaning: "" },
+    { hanzi: "bb", pinyin: "", meaning: "" }
+];
+
+const translate = new Translate(testDict)
+
+test('empty', () => {
+    expect(translate.getVocab("").length).toEqual(0)
+});
+
+test('no matches', () => {
+    expect(translate.getVocab(".@:;?").length).toEqual(0)
+});
+
+test('find both words', () => {
+    expect(translate.getVocab("abb").length).toEqual(2)
+});
