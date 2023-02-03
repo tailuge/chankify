@@ -2,12 +2,22 @@ import { Entry } from "./Entry"
 
 export class HanDict {
 
-    readonly dictionary: Map<string, Entry> = new Map();
-    readonly empty: Entry = { hanzi: "", pinyin: "", meaning: "" };
-    readonly maxWordLength = 8;
+    readonly dictionary: Map<string, Entry> = new Map()
+    readonly empty: Entry = { hanzi: "", pinyin: "", meaning: "" }
+    readonly maxWordLength = 8
 
     constructor(entries: Entry[]) {
-        entries.forEach(entry => { this.dictionary.set(entry.hanzi, entry) });
+        entries.forEach(entry => { this.addOrExtend(entry) })
+    }
+
+    addOrExtend(entry: Entry) {
+        const currentEntry = this.dictionary.get(entry.hanzi)
+        if (currentEntry) {
+            currentEntry.pinyin += ' / ' + entry.pinyin
+            currentEntry.meaning += ' / ' + entry.meaning
+        } else {
+            this.dictionary.set(entry.hanzi, entry)
+        }
     }
 
     exactMatch(input: string): Entry {
