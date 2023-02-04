@@ -16,8 +16,7 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
 
 
   extractVocab = () => {
-    const vocab = this.translate.getVocab(this.state.inputText)
-    const text = vocab.map(entry => `${entry.hanzi}\t${entry.pinyin}\t${entry.meaning}`).join("\n")
+    const text = this.translate.getTabDelimitedRows(this.state.inputText).join("\n")
     this.setState({ inputText: this.state.inputText, outputText: text })
   }
 

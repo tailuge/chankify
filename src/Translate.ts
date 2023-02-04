@@ -1,5 +1,6 @@
 import { Entry } from "./Entry";
 import { HanDict } from "./HanDict";
+import { Sentence } from "./Sentence";
 
 export class Translate {
 
@@ -12,7 +13,7 @@ export class Translate {
     getVocab(input: string): Entry[] {
 
         var words = new Set<Entry>()
-        while(input.length > 0) {
+        while (input.length > 0) {
             var word = this.dictionary.longestPrefixMatch(input)
             if (word === this.dictionary.empty) {
                 // no word found, remove first char from input and continue
@@ -24,4 +25,14 @@ export class Translate {
         }
         return Array.from(words.values())
     }
+
+    getTabDelimitedRows(input: string): string[] {
+        const sentences = new Sentence(input)
+        return this.getVocab(input).map(entry => this.getTabDelimitedRow(entry,sentences))
+    }
+
+    getTabDelimitedRow(entry: Entry, sentences: Sentence) {
+        return `${entry.hanzi}\t${entry.pinyin}\t${entry.meaning}\t${sentences.getReferenceSentence(entry.hanzi)}`
+    }
+
 }
