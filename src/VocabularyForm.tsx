@@ -35,6 +35,12 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
     a.remove();
   }
 
+  handleExportClick = () => {
+    this.extractVocab()
+    var data = encodeURIComponent(JSON.stringify(this.translate.getAnkiData(this.state.inputText)))
+    window.location.href = `./sample/index.html?data=${data}`
+  }
+
   render() {
     return (
 
@@ -43,11 +49,12 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
           <textarea rows={5} value={this.state.inputText} style={{ width: '100%' }} onChange={this.handleInputChange}></textarea>
           <br />
           <button onClick={this.handleButtonClick}>Extract Vocabulary</button>
-          <button onClick={this.handleDownloadClick} disabled={this.state.outputText.length === 0}>Download Vocabulary</button>
+          <button onClick={this.handleDownloadClick} disabled={this.state.outputText.length === 0}>Download Tab seperated vocabulary</button>
+          <button onClick={this.handleExportClick} disabled={this.state.outputText.length === 0}>Export as Anki Deck.apkg</button>
         </div>
         <div style={{ flex: 1 }}>
           <div style={{ display: this.state.outputText ? "none" : "block" }}>
-            e.g. Paste the following text: 近來「AI製圖」在網上蔚為一陣風潮，透過輸入相關關鍵字，AI就能經過大數據的計算，生成使用者所要的圖片。
+            e.g. Paste the following text: 近來「人工智慧製圖」在網上蔚為一陣風潮，透過輸入相關關鍵字，AI就能經過大數據的計算，生成使用者所要的圖片。
           </div>
           <pre>{this.state.outputText}</pre>
         </div>

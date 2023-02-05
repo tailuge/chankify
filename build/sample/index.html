@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+</head>
+
+<!-- sqlite -->
+<script src='js/sql/sql.js'></script>
+
+<!-- anki -->
+<script src="js/anki/genanki.js"></script>
+
+<!-- zip .apkg -->
+<script src="js/jszip.min.js"></script>
+
+<!-- File saver -->
+<script src="js/filesaver/FileSaver.min.js"></script>
+
+<script src='js/index.js'></script>
+
+<body>
+
+  <div>
+    Export Anki APKG deck. 
+  </div>
+
+  <br>
+  <div style="font-size: x-small;">
+
+    Anki deck generation based on <a href="https://github.com/krmanik/genanki-js">https://github.com/krmanik/genanki-js</a>
+ 
+    <br/>
+
+    Call this page with encoded URI params as follows:
+    <pre>
+    .....?data=[
+                {front:"q1", back:"a1"},
+                {front:"q2", back:"a2"},
+                ...
+               ]
+    </pre>
+    e.g.
+    <pre>
+       ?data=[{"front"%3A"q1"%2C"back"%3A"a1"}%2C{"front"%3A"q2"%2C"back"%3A"a2"}]
+    </pre>
+  </div>
+  <div>
+    If this page has been called correctly your browser should download a file called "Deck*.apkg" and offer it to be
+    opened by Anki on a mobile device.
+  </div>
+
+</body>
+
+</html>
