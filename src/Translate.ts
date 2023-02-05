@@ -27,18 +27,18 @@ export class Translate {
     }
 
     getTabDelimitedRows(input: string): string[] {
-        const sentences = new Sentence(input)
-        return this.getVocab(input).map(entry => this.getTabDelimitedRow(entry, sentences))
+        return this.getVocab(input).map(entry => this.getTabDelimitedRow(entry))
     }
 
-    getTabDelimitedRow(entry: Entry, sentences: Sentence) {
-        return `${entry.hanzi}\t${entry.pinyin}\t${entry.meaning}\t${sentences.getReferenceSentence(entry.hanzi)}`
+    getTabDelimitedRow(entry: Entry) {
+        return `${entry.hanzi}\t${entry.pinyin}\t${entry.meaning}`
     }
 
     getAnkiData(input: string): any {
         const sentences = new Sentence(input)
         return this.getVocab(input).map(entry => {
-            return { front: entry.hanzi, back: `${entry.pinyin}<br/>${entry.meaning}<br/> e.g. ${sentences.getReferenceSentence(entry.hanzi)}` }
+            const containingSentence = sentences.getReferenceSentence(entry.hanzi).replaceAll(entry.hanzi,`<b>${entry.hanzi}</b>`)
+            return { q: containingSentence, a: `${entry.pinyin}<br/>${entry.meaning}` }
         })
     }
 }

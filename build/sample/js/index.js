@@ -25,9 +25,9 @@ initSqlJs().then(function (sql) {
 });
 
 // queryparam should be an array of data encoded with the following format
-// https://url?data=[{"front":"question1","back":"answer1"},...]
+// https://url?data=[{"q":"question1","a":"answer1"},...]
 // e.g.
-// ?data=[{"front"%3A"q1"%2C"back"%3A"a1"}%2C{"front"%3A"q2"%2C"back"%3A"a2"}]
+// ?data=[{"q"%3A"q1"%2C"a"%3A"a1"}%2C{"q"%3A"q2"%2C"a"%3A"a2"}]
 
 function exportDataAsAPKG() {
 
@@ -37,6 +37,8 @@ function exportDataAsAPKG() {
         console.log("No data parameter, stopping.");
         return;
     }
+
+    console.log(`data has ${data[1].length} chars.`);
     const parsedData = JSON.parse(decodeURIComponent(data[1]));
 
     const date = new Date();
@@ -66,7 +68,7 @@ function exportDataAsAPKG() {
 
     parsedData.forEach(card => {
         console.log(JSON.stringify(card));
-        d.addNote(m.note([card.front, card.back]));
+        d.addNote(m.note([card.q, card.a]));
     });
 
     p.addDeck(d);
