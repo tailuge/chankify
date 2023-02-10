@@ -1,6 +1,7 @@
 import { Entry } from "./Entry";
 import { HanDict } from "./HanDict";
 import { Sentence } from "./Sentence";
+import { CommonWords } from "./CommonWords"
 
 export class Translate {
 
@@ -23,7 +24,7 @@ export class Translate {
                 words.add(word)
             }
         }
-        return Array.from(words.values())
+        return Array.from(words.values()).filter(entry => !CommonWords.isCommon(entry.hanzi))
     }
 
     getTabDelimitedRows(input: string): string[] {
@@ -41,4 +42,9 @@ export class Translate {
             return { q: containingSentence, a: `${entry.pinyin}<br/>${entry.meaning}` }
         })
     }
+
+    getAnkiSentenceData(inputText: string): any {
+        throw new Error('Method not implemented.<ruby><rb>日</rb><rt>に</rt></ruby>');
+    }
+  
 }

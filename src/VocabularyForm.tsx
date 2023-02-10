@@ -36,8 +36,12 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
   }
 
   handleExportClick = () => {
-    this.extractVocab()
     var data = encodeURIComponent(JSON.stringify(this.translate.getAnkiData(this.state.inputText)))
+    window.location.href = `./sample/index.html?data=${data}`
+  }
+
+  handleExportSentenceClick = () => {
+    var data = encodeURIComponent(JSON.stringify(this.translate.getAnkiSentenceData(this.state.inputText)))
     window.location.href = `./sample/index.html?data=${data}`
   }
 
@@ -51,6 +55,7 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
           <button onClick={this.handleButtonClick}>Extract Vocabulary</button>
           <button onClick={this.handleDownloadClick} disabled={this.state.outputText.length === 0}>Download Tab seperated vocabulary</button>
           <button onClick={this.handleExportClick} disabled={this.state.outputText.length === 0}>Export as Anki Deck.apkg</button>
+          <button onClick={this.handleExportSentenceClick} disabled={this.state.outputText.length === 0}>Export Sentence Anki Deck.apkg</button>
         </div>
         <div style={{ flex: 1 }}>
           <div style={{ display: this.state.outputText ? "none" : "block" }}>
