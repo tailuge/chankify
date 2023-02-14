@@ -4,7 +4,7 @@ export class Sentence {
     sentences: string[] = []
 
     constructor(text: string) {
-        this.sentences = text.split(/[。！？…《》.,!，、]/)
+        this.sentences = text.split(/[ 。！？…《》.,!，、\n]+/)
     }
 
     size(): number {

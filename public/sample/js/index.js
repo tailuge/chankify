@@ -32,6 +32,14 @@ initSqlJs().then(function (sql) {
 
 function exportDataAsAPKG() {
 
+    const sessionId = /sessionId=(.*)/.exec(location.search);
+    if (sessionId !== null) {
+        console.log(`sessionId is ${sessionId[1]}`);
+        const parsedData = JSON.parse(decodeURIComponent(sessionStorage.getItem(sessionId[1])));
+        exportData(parsedData);
+        return;
+    }
+
     const data = /data=(.*)/.exec(location.search);
 
     if (data === null) {
@@ -41,7 +49,10 @@ function exportDataAsAPKG() {
 
     console.log(`data has ${data[1].length} chars.`);
     const parsedData = JSON.parse(decodeURIComponent(data[1]));
+    exportData(parsedData);
+}
 
+function exportData(parsedData) {
     const date = new Date();
     const uuid = Math.floor(date.getTime() / 1000);
     console.log(uuid)
