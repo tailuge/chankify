@@ -1,7 +1,7 @@
 # Chankify
 [![CodeFactor](https://www.codefactor.io/repository/github/tailuge/chankify/badge)](https://www.codefactor.io/repository/github/tailuge/chankify) [![Open in Gitpod](https://img.shields.io/badge/Gitpod-Open%20in%20Gitpod-%230092CF.svg)](https://gitpod.io/#https://github.com/tailuge/chankify) ![visitors](https://visitor-badge.glitch.me/badge?page_id=tailuge.chankify)
 
-Convert chinese texts into an anki formated vocabulary list.
+Convert chinese texts into an anki formated vocabulary list on your mobile phone.
 
 Try it here: [https://tailuge.github.io/chankify/build/](https://tailuge.github.io/chankify/build/)
 
