@@ -1,22 +1,25 @@
 import { Entry } from "./Entry"
+import { RankedEntry } from "./RankedEntry"
 
 export class HanDict {
 
-    readonly dictionary: Map<string, Entry> = new Map()
+    readonly dictionary: Map<string, RankedEntry> = new Map()
     readonly empty: Entry = { hanzi: "", pinyin: "", meaning: "" }
     readonly maxWordLength = 8
 
     constructor(entries: Entry[]) {
-        entries.forEach(entry => { this.addOrExtend(entry) })
+        var rank = 1;
+        entries.forEach(entry => { this.addOrExtend(entry, rank++) })
     }
 
-    addOrExtend(entry: Entry) {
+    addOrExtend(entry: Entry, rank: number) {
         const currentEntry = this.dictionary.get(entry.hanzi)
         if (currentEntry) {
-            currentEntry.pinyin += ' / ' + entry.pinyin
-            currentEntry.meaning += ' / ' + entry.meaning
+//            console.log(`duplicate ${JSON.stringify(currentEntry)}`)
         } else {
-            this.dictionary.set(entry.hanzi, entry)
+            var rankedEntry:RankedEntry = entry as RankedEntry
+            rankedEntry.rank = rank
+            this.dictionary.set(entry.hanzi, rankedEntry)
         }
     }
 

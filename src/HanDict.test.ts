@@ -23,9 +23,11 @@ test('given bbb finds bb and not just b', () => {
     expect(dict.longestPrefixMatch("bbb").hanzi).toEqual("bb")
 });
 
+/*
 test('given c finds concatenated c entries in input dictionary', () => {
     const result = dict.longestPrefixMatch("c")
     expect(result.hanzi).toEqual("c")
     expect(result.pinyin).toEqual("c1 / c2")
     expect(result.meaning).toEqual("1 / 2")
 });
+*/

@@ -1,6 +1,6 @@
 import React from 'react';
 import { VocabularyFormState } from './VocabularyFormState';
-import dict from './dict.json';
+import dict from './dict_rank.json';
 import { Translate } from './Translate';
 import { Entry } from './Entry';
 
