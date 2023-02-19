@@ -2,6 +2,8 @@ import { Entry } from "./Entry";
 import { HanDict } from "./HanDict";
 import { Sentence } from "./Sentence";
 import { CommonWords } from "./CommonWords"
+import { RankedEntry } from "./RankedEntry";
+import { Ruby } from "./Ruby";
 
 export class Translate {
 
@@ -11,9 +13,9 @@ export class Translate {
         this.dictionary = new HanDict(entries)
     }
 
-    getVocab(input: string): Entry[] {
+    getVocab(input: string): RankedEntry[] {
 
-        var words = new Set<Entry>()
+        var words = new Set<RankedEntry>()
         while (input.length > 0) {
             var word = this.dictionary.longestPrefixMatch(input)
             if (word === this.dictionary.empty) {
@@ -35,16 +37,20 @@ export class Translate {
         return `${entry.hanzi}\t${entry.pinyin}\t${entry.meaning}`
     }
 
-    getAnkiData(input: string): any {
-        const sentences = new Sentence(input)
-        return this.getVocab(input).map(entry => {
+    getAnkiData(inputText: string): any {
+        const sentences = new Sentence(inputText)
+        return this.getVocab(inputText).map(entry => {
             const containingSentence = sentences.getReferenceSentence(entry.hanzi).replaceAll(entry.hanzi,`<b>${entry.hanzi}</b>`)
             return { q: containingSentence, a: `${entry.pinyin}<br/>${entry.meaning}` }
         })
     }
 
     getAnkiSentenceData(inputText: string): any {
-        throw new Error('Method not implemented.<ruby><rb>日</rb><rt>に</rt></ruby>');
+        const sentences = new Sentence(inputText)
+        return sentences.sentences.map(sentence => { 
+            const ruby = new Ruby(sentence)
+            return {q:sentence, a:ruby.format(this.getVocab(sentence))}
+        })
     }
   
 }

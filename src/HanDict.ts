@@ -4,7 +4,7 @@ import { RankedEntry } from "./RankedEntry"
 export class HanDict {
 
     readonly dictionary: Map<string, RankedEntry> = new Map()
-    readonly empty: Entry = { hanzi: "", pinyin: "", meaning: "" }
+    readonly empty: RankedEntry = { hanzi: "", pinyin: "", meaning: "", rank:0 }
     readonly maxWordLength = 8
 
     constructor(entries: Entry[]) {
@@ -23,12 +23,12 @@ export class HanDict {
         }
     }
 
-    exactMatch(input: string): Entry {
+    exactMatch(input: string): RankedEntry {
         var result = this.dictionary.get(input)
         return result ? result : this.empty
     }
 
-    longestPrefixMatch(input: string): Entry {
+    longestPrefixMatch(input: string): RankedEntry {
         var prefix = ""
         var longestMatch = this.empty
         for (const char of input.substring(0,this.maxWordLength)) {

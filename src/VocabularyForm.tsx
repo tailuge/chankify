@@ -44,8 +44,13 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
   }
 
   handleExportSentenceClick = () => {
-    var data = encodeURIComponent(JSON.stringify(this.translate.getAnkiSentenceData(this.state.inputText)))
-    window.location.href = `./sample/index.html?data=${data}`
+    const date = new Date();
+    var translation = JSON.stringify(this.translate.getAnkiSentenceData(this.state.inputText))
+    console.log(translation)
+    var data = encodeURIComponent(translation)
+    var sessionUUID = Math.floor(date.getTime() / 1000).toString()
+    sessionStorage.setItem(sessionUUID,data)
+    window.location.href = `./sample/index.html?sessionId=${sessionUUID}`
   }
 
   render() {

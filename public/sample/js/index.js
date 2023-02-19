@@ -57,7 +57,7 @@ function exportData(parsedData) {
     const uuid = Math.floor(date.getTime() / 1000);
     console.log(uuid)
     const m = new Model({
-        name: "Basic",
+        name: "BasicF",
         id: `${uuid}`,
         flds: [
             { name: "Front" },
@@ -70,7 +70,7 @@ function exportData(parsedData) {
             {
                 name: "Card 1",
                 qfmt: "{{Front}}",
-                afmt: "{{FrontSide}}\n\n<hr id=answer>\n\n{{Back}}",
+                afmt: "{{FrontSide}}\n\n<hr id=answer>\n\n{{furigana:Back}}",
             }
         ],
     });
