@@ -42,23 +42,26 @@ export class Translate {
     getAnkiData(inputText: string): any {
         const sentences = new Sentence(inputText)
         return this.getVocab(inputText).map(entry => {
-            const containingSentence = sentences.getReferenceSentence(entry.hanzi).replaceAll(entry.hanzi,`<b>${entry.hanzi}</b>`)
+            const containingSentence = sentences.getReferenceSentence(entry.hanzi).replaceAll(entry.hanzi, `<b>${entry.hanzi}</b>`)
             return { q: containingSentence, a: `${entry.pinyin}<br/>${entry.meaning}` }
         })
     }
 
     getAnkiSentenceData(inputText: string): any {
         const sentences = new Sentence(inputText)
-        return sentences.sentences.map(sentence => { 
+        return sentences.sentences.map(sentence => {
             const ruby = new Ruby(sentence)
             const vocab = this.getVocab(sentence)
-            const vocabRows = vocab.map(entry => {
-                return `${entry.hanzi}[${entry.pinyin}] ${entry.meaning}`}
-                ).join("</li><li>")
-            return {q:sentence, a:ruby.format(vocab) + `<br/><br/><ul><li>${vocabRows}</li></ul>`}
+            return { q: sentence, a: ruby.format(vocab) + this.vocabAsHtmlList(vocab) }
         })
     }
 
+    vocabAsHtmlList(vocab: RankedEntry[]): string {
+        const vocabRows = vocab.map(entry => {
+            return `${entry.hanzi}[${entry.pinyin}] ${entry.meaning}`
+        }
+        ).join("</li><li>")
+        return `<br/><br/><ul style="text-align: left;"><li>${vocabRows}</li></ul>`
+    }
 
-  
 }

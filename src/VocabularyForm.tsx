@@ -71,12 +71,15 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
             min="0" max="5000"
             value={this.state.skipCount}
             onChange={this.handleSliderChange}
+            style={{ width: '100%' }}
             step="100" /> skip {this.state.skipCount} most common dictionary words from vocab
           <br />
           <button onClick={this.handleButtonClick}>Extract Vocabulary</button>
           <br />
           <button onClick={this.handleDownloadClick} disabled={this.state.outputText.length === 0}>Download Tab seperated vocabulary</button>
+          <br />
           <button onClick={this.handleExportClick} disabled={this.state.outputText.length === 0}>Export as vocab Anki Deck.apkg</button>
+          <br />
           <button onClick={this.handleExportSentenceClick} disabled={this.state.outputText.length === 0}>Export sentence Anki Deck.apkg</button>
         </div>
         <div style={{ flex: 1 }}>
