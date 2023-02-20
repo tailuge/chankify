@@ -8,7 +8,7 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
 {
 
   translate = new Translate(dict as Entry[])
-  state: VocabularyFormState = { inputText: '', outputText: '' }
+  state: VocabularyFormState = { inputText: '', outputText: '', skipCount: 1000 }
 
   handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     this.setState({ inputText: event.target.value, outputText: '' });
@@ -16,8 +16,9 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
 
 
   extractVocab = () => {
+    this.translate.skipCount = this.state.skipCount
     const text = this.translate.getTabDelimitedRows(this.state.inputText).join("\n")
-    this.setState({ inputText: this.state.inputText, outputText: text })
+    this.setState({ outputText: text })
   }
 
   handleButtonClick = () => {
@@ -39,7 +40,7 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
     const date = new Date();
     var data = encodeURIComponent(JSON.stringify(this.translate.getAnkiData(this.state.inputText)))
     var sessionUUID = Math.floor(date.getTime() / 1000).toString()
-    sessionStorage.setItem(sessionUUID,data)
+    sessionStorage.setItem(sessionUUID, data)
     window.location.href = `./sample/index.html?sessionId=${sessionUUID}`
   }
 
@@ -49,8 +50,12 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
     console.log(translation)
     var data = encodeURIComponent(translation)
     var sessionUUID = Math.floor(date.getTime() / 1000).toString()
-    sessionStorage.setItem(sessionUUID,data)
+    sessionStorage.setItem(sessionUUID, data)
     window.location.href = `./sample/index.html?sessionId=${sessionUUID}`
+  }
+
+  handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ skipCount: parseInt(event.target.value) })
   }
 
   render() {
@@ -58,12 +63,21 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
 
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', padding: '20px', width: '100%', border: '20px' }}>
         <div style={{ flex: 1 }}>
-          <textarea rows={5} value={this.state.inputText} style={{ width: '100%' }} onChange={this.handleInputChange}></textarea>
+          <textarea rows={8} value={this.state.inputText} style={{ width: '100%' }} onChange={this.handleInputChange}></textarea>
+          <br />
+          <input
+            id="typeinp"
+            type="range"
+            min="0" max="5000"
+            value={this.state.skipCount}
+            onChange={this.handleSliderChange}
+            step="100" /> skip {this.state.skipCount} most common dictionary words from vocab
           <br />
           <button onClick={this.handleButtonClick}>Extract Vocabulary</button>
+          <br />
           <button onClick={this.handleDownloadClick} disabled={this.state.outputText.length === 0}>Download Tab seperated vocabulary</button>
-          <button onClick={this.handleExportClick} disabled={this.state.outputText.length === 0}>Export as Anki Deck.apkg</button>
-          <button onClick={this.handleExportSentenceClick} disabled={this.state.outputText.length === 0}>Export Sentence Anki Deck.apkg</button>
+          <button onClick={this.handleExportClick} disabled={this.state.outputText.length === 0}>Export as vocab Anki Deck.apkg</button>
+          <button onClick={this.handleExportSentenceClick} disabled={this.state.outputText.length === 0}>Export sentence Anki Deck.apkg</button>
         </div>
         <div style={{ flex: 1 }}>
           <div style={{ display: this.state.outputText ? "none" : "block" }}>

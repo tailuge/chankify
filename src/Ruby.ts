@@ -17,6 +17,6 @@ export class Ruby {
     }
 
     rubyWord(hanzi: string, pinyin: string): string {
-        return `${hanzi}[${pinyin}]`
+        return ` ${hanzi}[${pinyin}]`
     }
 }

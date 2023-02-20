@@ -1,7 +1,6 @@
 import { Entry } from "./Entry";
 import { HanDict } from "./HanDict";
 import { Sentence } from "./Sentence";
-import { CommonWords } from "./CommonWords"
 import { RankedEntry } from "./RankedEntry";
 import { Ruby } from "./Ruby";
 
@@ -9,8 +8,11 @@ export class Translate {
 
     readonly dictionary: HanDict
 
+    skipCount: number
+
     constructor(entries: Entry[]) {
         this.dictionary = new HanDict(entries)
+        this.skipCount = 0
     }
 
     getVocab(input: string): RankedEntry[] {
@@ -26,7 +28,7 @@ export class Translate {
                 words.add(word)
             }
         }
-        return Array.from(words.values()).filter(entry => !CommonWords.isCommon(entry.hanzi))
+        return Array.from(words.values()).filter(entry => entry.rank > this.skipCount)
     }
 
     getTabDelimitedRows(input: string): string[] {
@@ -49,8 +51,12 @@ export class Translate {
         const sentences = new Sentence(inputText)
         return sentences.sentences.map(sentence => { 
             const ruby = new Ruby(sentence)
-            return {q:sentence, a:ruby.format(this.getVocab(sentence))}
+            const vocab = this.getVocab(sentence)
+            const vocabRows = vocab.map(entry => {return `${entry.hanzi} ${entry.meaning}`}).join("<br/>")
+            return {q:sentence, a:ruby.format(vocab) + '<br/><br/>'+ vocabRows}
         })
     }
+
+
   
 }

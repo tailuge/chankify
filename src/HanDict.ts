@@ -4,7 +4,7 @@ import { RankedEntry } from "./RankedEntry"
 export class HanDict {
 
     readonly dictionary: Map<string, RankedEntry> = new Map()
-    readonly empty: RankedEntry = { hanzi: "", pinyin: "", meaning: "", rank:0 }
+    readonly empty: RankedEntry = { hanzi: "", pinyin: "", meaning: "", rank: 0 }
     readonly maxWordLength = 8
 
     constructor(entries: Entry[]) {
@@ -13,11 +13,9 @@ export class HanDict {
     }
 
     addOrExtend(entry: Entry, rank: number) {
-        const currentEntry = this.dictionary.get(entry.hanzi)
-        if (currentEntry) {
-//            console.log(`duplicate ${JSON.stringify(currentEntry)}`)
-        } else {
-            var rankedEntry:RankedEntry = entry as RankedEntry
+
+        if (!this.dictionary.has(entry.hanzi)) {
+            var rankedEntry: RankedEntry = entry as RankedEntry
             rankedEntry.rank = rank
             this.dictionary.set(entry.hanzi, rankedEntry)
         }
@@ -31,7 +29,7 @@ export class HanDict {
     longestPrefixMatch(input: string): RankedEntry {
         var prefix = ""
         var longestMatch = this.empty
-        for (const char of input.substring(0,this.maxWordLength)) {
+        for (const char of input.substring(0, this.maxWordLength)) {
             prefix += char
             const nextLongestMatch = this.exactMatch(prefix)
             longestMatch = nextLongestMatch === this.empty ? longestMatch : nextLongestMatch
