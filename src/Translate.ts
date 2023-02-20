@@ -52,8 +52,10 @@ export class Translate {
         return sentences.sentences.map(sentence => { 
             const ruby = new Ruby(sentence)
             const vocab = this.getVocab(sentence)
-            const vocabRows = vocab.map(entry => {return `${entry.hanzi}[${entry.pinyin}] ${entry.meaning}`}).join("<br/>")
-            return {q:sentence, a:ruby.format(vocab) + '<br/><br/>'+ vocabRows}
+            const vocabRows = vocab.map(entry => {
+                return `${entry.hanzi}[${entry.pinyin}] ${entry.meaning}`}
+                ).join("</li><li>")
+            return {q:sentence, a:ruby.format(vocab) + `<br/><br/><ul><li>${vocabRows}</li></ul>`}
         })
     }
 
