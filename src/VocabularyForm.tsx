@@ -1,13 +1,15 @@
 import React from 'react';
 import { VocabularyFormState } from './VocabularyFormState';
-import dict from './dict_rank.json';
+import dict from './dict.json';
+import dict_rank from './dict_rank.json';
 import { Translate } from './Translate';
 import { Entry } from './Entry';
+import { HanDict } from './HanDict';
 
 export class VocabularyForm extends React.Component<{}, VocabularyFormState>
 {
 
-  translate = new Translate(dict as Entry[])
+  translate = new Translate(HanDict.fromDictAndRanking(dict as Entry[], dict_rank))
   state: VocabularyFormState = { inputText: '', outputText: '', skipCount: 1000 }
 
   handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -61,7 +63,7 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
   render() {
     return (
 
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', padding: '20px', width: '100%', border: '20px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', padding: '10px', width: '90%', border: '10px' }}>
         <div style={{ flex: 1 }}>
           <textarea rows={8} value={this.state.inputText} style={{ width: '100%' }} onChange={this.handleInputChange}></textarea>
           <br />
@@ -74,13 +76,15 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
             style={{ width: '100%' }}
             step="100" /> skip {this.state.skipCount} most common dictionary words from vocab
           <br />
+          <br />
           <button onClick={this.handleButtonClick}>Extract Vocabulary</button>
+          <br />
           <br />
           <button onClick={this.handleDownloadClick} disabled={this.state.outputText.length === 0}>Download Tab seperated vocabulary</button>
           <br />
-          <button onClick={this.handleExportClick} disabled={this.state.outputText.length === 0}>Export as vocab Anki Deck.apkg</button>
+          <button onClick={this.handleExportClick} disabled={this.state.outputText.length === 0}>Export as single word vocab Anki Deck.apkg</button>
           <br />
-          <button onClick={this.handleExportSentenceClick} disabled={this.state.outputText.length === 0}>Export sentence Anki Deck.apkg</button>
+          <button onClick={this.handleExportSentenceClick} disabled={this.state.outputText.length === 0}>Export whole sentence Anki Deck.apkg</button>
         </div>
         <div style={{ flex: 1 }}>
           <div style={{ display: this.state.outputText ? "none" : "block" }}>

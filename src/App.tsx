@@ -13,7 +13,7 @@ function App() {
           rel="noopener noreferrer"
         >
           Chankify
-        </a> - generate tab seperated vocab list from chinese texts
+        </a> - Generate Anki vocabulary lists from chinese texts on mobile
       </header>
       <VocabularyForm />
     </div>

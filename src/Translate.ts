@@ -10,8 +10,8 @@ export class Translate {
 
     skipCount: number
 
-    constructor(entries: Entry[]) {
-        this.dictionary = new HanDict(entries)
+    constructor(dictionary: HanDict) {
+        this.dictionary = dictionary
         this.skipCount = 0
     }
 

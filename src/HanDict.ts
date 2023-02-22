@@ -3,20 +3,40 @@ import { RankedEntry } from "./RankedEntry"
 
 export class HanDict {
 
+    readonly defaultRank = 100000
     readonly dictionary: Map<string, RankedEntry> = new Map()
     readonly empty: RankedEntry = { hanzi: "", pinyin: "", meaning: "", rank: 0 }
     readonly maxWordLength = 8
 
     constructor(entries: Entry[]) {
-        var rank = 1;
-        entries.forEach(entry => { this.addOrExtend(entry, rank++) })
+        entries.forEach(entry => { this.addOrExtend(entry) })
     }
 
-    addOrExtend(entry: Entry, rank: number) {
+    static fromDictAndRanking(entries: Entry[], rankedEntries: Entry[]): HanDict {
+        const hanDict = new HanDict(entries)
+        hanDict.importRanking(rankedEntries)
+        return hanDict
+    }
 
-        if (!this.dictionary.has(entry.hanzi)) {
-            var rankedEntry: RankedEntry = entry as RankedEntry
-            rankedEntry.rank = rank
+    importRanking(rankedEntries: Entry[]) {
+        var rank = 1;
+        rankedEntries.forEach(entry => {
+            const rankedEntry = this.dictionary.get(entry.hanzi)
+            rankedEntry && (rankedEntry.rank = rank++)
+        })
+
+    }
+
+    addOrExtend(entry: Entry) {
+
+        var rankedEntry: RankedEntry = entry as RankedEntry
+        rankedEntry.rank = this.defaultRank
+
+        if (this.dictionary.has(entry.hanzi)) {
+            const existingEntry = this.dictionary.get(entry.hanzi)
+            existingEntry && (existingEntry.pinyin = existingEntry.pinyin + '/' + entry.pinyin )
+            existingEntry && (existingEntry.meaning = existingEntry.meaning + '/' + entry.meaning )
+        } else {
             this.dictionary.set(entry.hanzi, rankedEntry)
         }
     }

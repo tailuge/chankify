@@ -1,3 +1,4 @@
+import { HanDict } from './HanDict';
 import { Translate } from './Translate'
 
 const testDict = [
@@ -6,7 +7,7 @@ const testDict = [
     { hanzi: "bb", pinyin: "", meaning: "" }
 ];
 
-const translate = new Translate(testDict)
+const translate = new Translate(new HanDict(testDict))
 
 test('empty', () => {
     expect(translate.getVocab("").length).toEqual(0)
