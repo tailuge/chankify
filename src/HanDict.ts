@@ -1,5 +1,6 @@
 import { Entry } from "./Entry"
 import { RankedEntry } from "./RankedEntry"
+import Pinyin from "pinyin-tone"
 
 export class HanDict {
 
@@ -32,13 +33,22 @@ export class HanDict {
         var rankedEntry: RankedEntry = entry as RankedEntry
         rankedEntry.rank = this.defaultRank
 
+        entry.pinyin = Pinyin(entry.pinyin.toLowerCase().replaceAll("u:","v")).replace(/\s+/g, '')
+        entry.meaning = entry.meaning.split('/')[0]
         if (this.dictionary.has(entry.hanzi)) {
             const existingEntry = this.dictionary.get(entry.hanzi)
-            existingEntry && (existingEntry.pinyin = existingEntry.pinyin + '/' + entry.pinyin )
-            existingEntry && (existingEntry.meaning = existingEntry.meaning + '/' + entry.meaning )
+            existingEntry && (existingEntry.pinyin = this.extendOrCombinePinyin(existingEntry.pinyin, entry.pinyin))
+            existingEntry && (existingEntry.meaning = existingEntry.meaning + '/' + entry.meaning)
         } else {
             this.dictionary.set(entry.hanzi, rankedEntry)
         }
+    }
+
+    extendOrCombinePinyin(existing: string, additional: string): string {
+        if (existing.includes(additional)) {
+            return existing
+        }
+        return existing + '/' + additional
     }
 
     exactMatch(input: string): RankedEntry {

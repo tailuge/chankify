@@ -6687,6 +6687,11 @@ pify@^2.3.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==
 
+pinyin-tone@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/pinyin-tone/-/pinyin-tone-2.1.2.tgz#d07921830d4e5ff1aea53d51d6ef1385f14eba6d"
+  integrity sha512-+0wzkrnD5BxFsCIfr7Akc+Pe2i1JXUVjSumCXeaiWC3JayBGZv5E+lGRzuCTlyzScY0drrpHtsWUmMJGzYP4+g==
+
 pirates@^4.0.4:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/pirates/-/pirates-4.0.5.tgz#feec352ea5c3268fb23a37c702ab1699f35a5f3b"
