@@ -3,19 +3,34 @@ import { VocabularyFormState } from './VocabularyFormState';
 import dict from './dict.json';
 import dict_rank from './dict_rank.json';
 import { Translate } from './Translate';
+import { Statistics } from './Statistics'
 import { Entry } from './Entry';
 import { HanDict } from './HanDict';
 
 export class VocabularyForm extends React.Component<{}, VocabularyFormState>
 {
 
-  translate = new Translate(HanDict.fromDictAndRanking(dict as Entry[], dict_rank))
+  constructor(props: {} | Readonly<{}>) {
+    super(props);
+    const hanDict = HanDict.fromDictAndRanking(dict as Entry[], dict_rank)
+    this.translate = new Translate(hanDict)
+    this.statistics = new Statistics(hanDict)
+  }
+  
+  readonly translate: Translate
+  readonly statistics: Statistics
+
   state: VocabularyFormState = { inputText: '', outputText: '', skipCount: 1000 }
 
   handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     this.setState({ inputText: event.target.value, outputText: '' });
   };
 
+  extractVocabStats = () => {
+    this.statistics.skipCount = this.state.skipCount
+    const text = this.statistics.getReport(this.state.inputText)
+    this.setState({ outputText: text })
+  }
 
   extractVocab = () => {
     this.translate.skipCount = this.state.skipCount
@@ -25,6 +40,10 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
 
   handleButtonClick = () => {
     this.extractVocab()
+  };
+
+  handleStatisticsButtonClick = () => {
+    this.extractVocabStats()
   };
 
   handleDownloadClick = () => {
@@ -78,6 +97,7 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
           <br />
           <br />
           <button onClick={this.handleButtonClick}>Extract Vocabulary</button>
+          <button onClick={this.handleStatisticsButtonClick}>Extract Statistics</button>
           <br />
           <br />
           <button onClick={this.handleDownloadClick} disabled={this.state.outputText.length === 0}>Download Tab seperated vocabulary</button>
@@ -91,6 +111,8 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
             e.g. Paste the following text: 近來「人工智慧製圖」在網上蔚為一陣風潮，透過輸入相關關鍵字，AI就能經過大數據的計算，生成使用者所要的圖片。
           </div>
           <pre>{this.state.outputText}</pre>
+          <div> {}
+          </div>
         </div>
       </div>
 
