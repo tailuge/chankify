@@ -13,16 +13,16 @@ export class HanDict {
         entries.forEach(entry => { this.addOrExtend(entry) })
     }
 
-    static fromDictAndRanking(entries: Entry[], rankedEntries: Entry[]): HanDict {
+    static fromDictAndRanking(entries: Entry[], rankedEntries: string[]): HanDict {
         const hanDict = new HanDict(entries)
         hanDict.importRanking(rankedEntries)
         return hanDict
     }
 
-    importRanking(rankedEntries: Entry[]) {
+    importRanking(rankedEntries: string[]) {
         var rank = 1;
         rankedEntries.forEach(entry => {
-            const rankedEntry = this.dictionary.get(entry.hanzi)
+            const rankedEntry = this.dictionary.get(entry)
             rankedEntry && (rankedEntry.rank = rank++)
         })
 
