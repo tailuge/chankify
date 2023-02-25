@@ -28,7 +28,12 @@ export class Translate {
                 words.add(word)
             }
         }
-        return Array.from(words.values()).filter(entry => entry.rank > this.skipCount)
+        return this.sortVocabLongestFirst(Array.from(words.values()).filter(entry => entry.rank > this.skipCount))
+    }
+
+    sortVocabLongestFirst(entries: RankedEntry[]) {
+        entries.sort((a,b)=>b.hanzi.length - a.hanzi.length)
+        return entries
     }
 
     getTabDelimitedRows(input: string): string[] {
@@ -44,6 +49,14 @@ export class Translate {
         return this.getVocab(inputText).map(entry => {
             const containingSentence = sentences.getReferenceSentence(entry.hanzi).replaceAll(entry.hanzi, `<b>${entry.hanzi}</b>`)
             return { q: containingSentence, a: `${entry.pinyin}<br/>${entry.meaning}` }
+        })
+    }
+
+    getAnkiClozeData(inputText: string): any {
+        const sentences = new Sentence(inputText)
+        return this.getVocab(inputText).map(entry => {
+            const containingSentence = sentences.getReferenceSentence(entry.hanzi).replaceAll(entry.hanzi, `<b>...</b>`)
+            return { q: containingSentence, a: `${Ruby.rubyWord(entry.hanzi, entry.pinyin)}<br/>${entry.meaning}` }
         })
     }
 

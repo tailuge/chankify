@@ -11,12 +11,12 @@ export class Ruby {
     format(entries: RankedEntry[]): string {
         var result = this.sentence
         entries.forEach(entry => {
-            result = result.replaceAll(entry.hanzi,this.rubyWord(entry.hanzi, entry.pinyin))
+            result = result.replaceAll(entry.hanzi,Ruby.rubyWord(entry.hanzi, entry.pinyin))
         })
         return result
     }
 
-    rubyWord(hanzi: string, pinyin: string): string {
+    static rubyWord(hanzi: string, pinyin: string): string {
         return ` ${hanzi}[${pinyin}]`
     }
 }

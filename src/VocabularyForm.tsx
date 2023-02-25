@@ -16,7 +16,7 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
     this.translate = new Translate(hanDict)
     this.statistics = new Statistics(hanDict)
   }
-  
+
   readonly translate: Translate
   readonly statistics: Statistics
 
@@ -58,18 +58,19 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
   }
 
   handleExportClick = () => {
-    const date = new Date();
-    var data = encodeURIComponent(JSON.stringify(this.translate.getAnkiData(this.state.inputText)))
-    var sessionUUID = Math.floor(date.getTime() / 1000).toString()
-    sessionStorage.setItem(sessionUUID, data)
-    window.location.href = `./sample/index.html?sessionId=${sessionUUID}`
+    this.storeAndRedirect(encodeURIComponent(JSON.stringify(this.translate.getAnkiData(this.state.inputText))))
   }
 
   handleExportSentenceClick = () => {
+    this.storeAndRedirect(encodeURIComponent(JSON.stringify(this.translate.getAnkiSentenceData(this.state.inputText))))
+  }
+
+  handleExportClozeClick = () => {
+    this.storeAndRedirect(encodeURIComponent(JSON.stringify(this.translate.getAnkiClozeData(this.state.inputText))))
+  }
+
+  storeAndRedirect(data: string) {
     const date = new Date();
-    var translation = JSON.stringify(this.translate.getAnkiSentenceData(this.state.inputText))
-    console.log(translation)
-    var data = encodeURIComponent(translation)
     var sessionUUID = Math.floor(date.getTime() / 1000).toString()
     sessionStorage.setItem(sessionUUID, data)
     window.location.href = `./sample/index.html?sessionId=${sessionUUID}`
@@ -102,16 +103,18 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
           <br />
           <button onClick={this.handleDownloadClick} disabled={this.state.outputText.length === 0}>Download Tab seperated vocabulary</button>
           <br />
-          <button onClick={this.handleExportClick} disabled={this.state.outputText.length === 0}>Export as single word vocab Anki Deck.apkg</button>
+          <button onClick={this.handleExportClick} disabled={this.state.outputText.length === 0}>Export as single word vocab Anki deck.apkg</button>
           <br />
-          <button onClick={this.handleExportSentenceClick} disabled={this.state.outputText.length === 0}>Export whole sentence Anki Deck.apkg</button>
+          <button onClick={this.handleExportSentenceClick} disabled={this.state.outputText.length === 0}>Export whole sentence Anki deck.apkg</button>
+          <br />
+          <button onClick={this.handleExportClozeClick} disabled={this.state.outputText.length === 0}>Export cloze Anki deck.apkg</button>
         </div>
         <div style={{ flex: 1 }}>
           <div style={{ display: this.state.outputText ? "none" : "block" }}>
             e.g. Paste the following text: 近來「人工智慧製圖」在網上蔚為一陣風潮，透過輸入相關關鍵字，AI就能經過大數據的計算，生成使用者所要的圖片。
           </div>
           <pre>{this.state.outputText}</pre>
-          <div> {}
+          <div> { }
           </div>
         </div>
       </div>
