@@ -55,7 +55,7 @@ export class Translate {
     getAnkiClozeData(inputText: string): any {
         const sentences = new Sentence(inputText)
         return this.getVocab(inputText).map(entry => {
-            const containingSentence = sentences.getReferenceSentence(entry.hanzi).replaceAll(entry.hanzi, `<b>...</b>`)
+            const containingSentence = sentences.getReferenceSentence(entry.hanzi).replaceAll(entry.hanzi, `<b>...</b>`) + `<br/>${entry.meaning}`
             return { q: containingSentence, a: `${Ruby.rubyWord(entry.hanzi, entry.pinyin)}<br/>${entry.meaning}` }
         })
     }
