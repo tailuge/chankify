@@ -58,14 +58,17 @@ export class VocabularyForm extends React.Component<{}, VocabularyFormState>
   }
 
   handleExportClick = () => {
+    this.extractVocab()
     this.storeAndRedirect(encodeURIComponent(JSON.stringify(this.translate.getAnkiData(this.state.inputText))))
   }
 
   handleExportSentenceClick = () => {
+    this.extractVocab()
     this.storeAndRedirect(encodeURIComponent(JSON.stringify(this.translate.getAnkiSentenceData(this.state.inputText))))
   }
 
   handleExportClozeClick = () => {
+    this.extractVocab()
     this.storeAndRedirect(encodeURIComponent(JSON.stringify(this.translate.getAnkiClozeData(this.state.inputText))))
   }
 
